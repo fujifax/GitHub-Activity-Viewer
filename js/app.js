@@ -1131,3 +1131,13 @@ class App {
 document.addEventListener('DOMContentLoaded', () => {
     new App();
 });
+
+/* ===== Module Exports (for testing) ===== */
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        CacheManager, GitHubAPI, HeatmapRenderer, App,
+        formatNumber, formatDate, timeAgo, getLangColor,
+        LANGUAGE_COLORS, EVENT_ICONS, EVENT_LABELS,
+        GITHUB_API, CACHE_DURATION, REPOS_PER_PAGE,
+    };
+}
