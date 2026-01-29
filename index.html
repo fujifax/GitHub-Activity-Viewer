@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Activity Viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-brand">
+                <svg class="header-logo" viewBox="0 0 16 16" width="32" height="32" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                <h1 class="header-title">GitHub Activity Viewer</h1>
+            </div>
+            <div class="header-search">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M10.68 11.74a6 6 0 01-7.922-8.982 6 6 0 018.982 7.922l3.04 3.04a.749.749 0 01-.326 1.275.749.749 0 01-.734-.215l-3.04-3.04zM11.5 7a4.499 4.499 0 10-8.997 0A4.499 4.499 0 0011.5 7z"/>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="GitHubユーザー名を入力..." autocomplete="off">
+                    <button id="search-btn" class="btn btn-primary">検索</button>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="compare-btn" class="btn btn-ghost" title="比較モード">
+                    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M9.573.677L7.177 3.073a.25.25 0 000 .354l2.396 2.396A.25.25 0 0010 5.646V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5h-1V.854a.25.25 0 00-.427-.177zM6 12v-1.646a.25.25 0 01.427-.177l2.396 2.396a.25.25 0 010 .354l-2.396 2.396A.25.25 0 016 15.146V13.5H5A2.5 2.5 0 012.5 11V5.372a2.25 2.25 0 111.5 0V11a1 1 0 001 1zM11.75 11.5a.75.75 0 100 1.5.75.75 0 000-1.5zM3.25 4a.75.75 0 100-1.5.75.75 0 000 1.5z"/>
+                    </svg>
+                    <span class="btn-label">比較</span>
+                </button>
+                <button id="theme-toggle" class="btn btn-ghost" title="テーマ切替">
+                    <svg class="icon-sun" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M8 12a4 4 0 100-8 4 4 0 000 8zm0-1.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5zm5.657-8.157a.75.75 0 010 1.06l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm13 0a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zm-8 5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zm3.536-1.464a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061z"/>
+                    </svg>
+                    <svg class="icon-moon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z"/>
+                    </svg>
+                </button>
+                <button id="settings-btn" class="btn btn-ghost" title="設定">
+                    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M8 0a8.2 8.2 0 01.701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107a2.477 2.477 0 001.152 1.497l.748.432c.534.308 1.165.378 1.756.26l1.13-.225c.653-.13 1.327.09 1.72.648a8.08 8.08 0 011.046 3.327c.087.66-.26 1.325-.874 1.608l-1.062.49a2.477 2.477 0 00-1.263 1.33l-.006.016c-.242.607-.19 1.292.148 1.87l.57.975c.32.546.258 1.255-.178 1.726a8.044 8.044 0 01-2.586 1.694 8.137 8.137 0 01-2.848.588c-.658.084-1.327-.256-1.638-.852l-.535-1.025a2.477 2.477 0 00-1.378-1.22l-.016-.006a2.477 2.477 0 00-1.748.023l-1.085.4c-.608.224-1.288.076-1.706-.47a8.04 8.04 0 01-1.194-6.14 8.08 8.08 0 011.053-2.559c.393-.558 1.067-.778 1.72-.648l1.13.225c.59.118 1.222.048 1.756-.26l.748-.432a2.477 2.477 0 001.152-1.497l.288-1.107C6.01.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0zm-.571 1.525l-.283 1.118a3.977 3.977 0 01-1.851 2.404l-.748.432a3.977 3.977 0 01-2.822.418l-1.13-.225a6.544 6.544 0 00-.853 2.088l1.062.49a3.977 3.977 0 012.03 2.138l.006.016a3.977 3.977 0 01-.238 3.003l-.57.975a6.544 6.544 0 003.427 2.32l.535-1.025a3.977 3.977 0 012.213-1.96l.016-.006a3.977 3.977 0 012.81.037l1.085.4a6.544 6.544 0 00.974-5.012 6.578 6.578 0 00-.86-2.088l-1.13.225a3.977 3.977 0 01-2.822-.418l-.748-.432a3.977 3.977 0 01-1.851-2.404l-.288-1.107a6.706 6.706 0 00-1.396 0zM8 5.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM4 8a4 4 0 118 0 4 4 0 01-8 0z"/>
+                    </svg>
+                    <span class="btn-label">設定</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="welcome">
+            <div class="welcome-inner">
+                <svg class="welcome-icon" viewBox="0 0 16 16" width="64" height="64" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                <h2>GitHubユーザーのアクティビティを表示</h2>
+                <p>ユーザー名を入力して検索してください</p>
+                <div class="welcome-suggestions">
+                    <span>例:</span>
+                    <button class="suggestion-btn" data-user="torvalds">torvalds</button>
+                    <button class="suggestion-btn" data-user="yyx990803">yyx990803</button>
+                    <button class="suggestion-btn" data-user="sindresorhus">sindresorhus</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading hidden">
+            <div class="loading-spinner"></div>
+            <p>データを取得中...</p>
+        </div>
+
+        <!-- Error -->
+        <div id="error" class="error-container hidden">
+            <svg viewBox="0 0 16 16" width="48" height="48" fill="currentColor">
+                <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575zm1.763.707a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368zm.53 3.996v2.5a.75.75 0 01-1.5 0v-2.5a.75.75 0 011.5 0zM9 11a1 1 0 11-2 0 1 1 0 012 0z"/>
+            </svg>
+            <h3 id="error-title">エラーが発生しました</h3>
+            <p id="error-message"></p>
+            <button class="btn btn-primary" onclick="document.getElementById('search-input').focus()">再検索</button>
+        </div>
+
+        <!-- App Content -->
+        <div id="app-content" class="app-content hidden">
+            <!-- Profile Section -->
+            <section id="profile-section" class="profile-section">
+                <div class="profile-card" id="profile-card">
+                    <div class="profile-avatar-wrapper">
+                        <img id="profile-avatar" class="profile-avatar" src="" alt="Avatar">
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="profile-name" class="profile-name"></h2>
+                        <p id="profile-login" class="profile-login"></p>
+                        <p id="profile-bio" class="profile-bio"></p>
+                        <div class="profile-meta">
+                            <span id="profile-followers" class="profile-meta-item">
+                                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 5.5a3.5 3.5 0 115.898 2.549 5.508 5.508 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.493 3.493 0 012 5.5zM11 4a.75.75 0 100 1.5 1.5 1.5 0 01.666 2.844.75.75 0 00-.416.672v.352a.75.75 0 00.574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 101.434-.44 5.01 5.01 0 00-2.56-3.012A3 3 0 0011 4zM3.5 5.5a2 2 0 114 0 2 2 0 01-4 0z"/></svg>
+                                <strong id="followers-count">0</strong> フォロワー
+                                <span class="separator">·</span>
+                                <strong id="following-count">0</strong> フォロー
+                            </span>
+                        </div>
+                        <div class="profile-details">
+                            <span id="profile-company" class="profile-detail hidden">
+                                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M1.75 16A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 00.25-.25V8.285a.25.25 0 00-.111-.208l-1.055-.703a.749.749 0 11.832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0114.25 16zM1.5 1.75v12.5c0 .138.112.25.25.25H4v-1.25a.75.75 0 01.75-.75h2.5a.75.75 0 01.75.75v1.25h2.25a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25h-8.5a.25.25 0 00-.25.25zM3.75 6h.5a.75.75 0 010 1.5h-.5a.75.75 0 010-1.5zM3 3.75A.75.75 0 013.75 3h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 3.75zM3.75 9h.5a.75.75 0 010 1.5h-.5a.75.75 0 010-1.5zM7 6.75A.75.75 0 017.75 6h.5a.75.75 0 010 1.5h-.5A.75.75 0 017 6.75zM7.75 3h.5a.75.75 0 010 1.5h-.5a.75.75 0 010-1.5zM7 9.75A.75.75 0 017.75 9h.5a.75.75 0 010 1.5h-.5A.75.75 0 017 9.75z"/></svg>
+                                <span id="company-text"></span>
+                            </span>
+                            <span id="profile-location" class="profile-detail hidden">
+                                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.535a5 5 0 117.072-7.072zm1.06 8.132a6.5 6.5 0 10-9.192 0l3.535 3.536a1.5 1.5 0 002.122 0zM8 9a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                                <span id="location-text"></span>
+                            </span>
+                            <span id="profile-blog" class="profile-detail hidden">
+                                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M7.775 3.275l1.25-1.25a3.5 3.5 0 114.95 4.95l-2.5 2.5a3.5 3.5 0 01-4.95 0 .751.751 0 01.018-1.042.751.751 0 011.042-.018 1.998 1.998 0 002.83 0l2.5-2.5a2.002 2.002 0 00-2.83-2.83l-1.25 1.25a.751.751 0 01-1.042-.018.751.751 0 01-.018-1.042zm-3.69 6.225a3.5 3.5 0 014.95 0 .751.751 0 01-.018 1.042.751.751 0 01-1.042.018 1.998 1.998 0 00-2.83 0l-2.5 2.5a1.998 1.998 0 002.83 2.83l1.25-1.25a.751.751 0 011.042.018.751.751 0 01.018 1.042l-1.25 1.25a3.5 3.5 0 11-4.95-4.95l2.5-2.5z"/></svg>
+                                <a id="blog-link" href="" target="_blank" rel="noopener"></a>
+                            </span>
+                            <span id="profile-twitter" class="profile-detail hidden">
+                                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0016 3.542a6.658 6.658 0 01-1.889.518 3.301 3.301 0 001.447-1.817 6.533 6.533 0 01-2.087.793A3.286 3.286 0 007.875 6.03a9.325 9.325 0 01-6.767-3.429 3.289 3.289 0 001.018 4.382A3.323 3.323 0 01.64 6.575v.045a3.288 3.288 0 002.632 3.218 3.203 3.203 0 01-.865.115 3.23 3.23 0 01-.614-.057 3.283 3.283 0 003.067 2.277A6.588 6.588 0 01.78 13.58a6.32 6.32 0 01-.78-.045A9.344 9.344 0 005.026 15z"/></svg>
+                                <a id="twitter-link" href="" target="_blank" rel="noopener">@<span id="twitter-text"></span></a>
+                            </span>
+                        </div>
+                        <div class="profile-actions">
+                            <a id="github-link" href="" target="_blank" rel="noopener" class="btn btn-outline">GitHubプロフィール</a>
+                            <button id="export-png-btn" class="btn btn-ghost btn-sm" title="PNGエクスポート">
+                                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M2.75 14A1.75 1.75 0 011 12.25v-2.5a.75.75 0 011.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 00.25-.25v-2.5a.75.75 0 011.5 0v2.5A1.75 1.75 0 0113.25 14zM7.25 7.689V2a.75.75 0 011.5 0v5.689l1.97-1.969a.749.749 0 111.06 1.06l-3.25 3.25a.749.749 0 01-1.06 0L4.22 6.78a.749.749 0 111.06-1.06z"/></svg>
+                                PNG
+                            </button>
+                            <button id="export-json-btn" class="btn btn-ghost btn-sm" title="JSONエクスポート">
+                                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M3.5 1.75v11.5c0 .09.048.173.126.217a.75.75 0 01-.752 1.298A1.748 1.748 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 010-1.5h1.5a.25.25 0 00.25-.25V4.664a.25.25 0 00-.073-.177L9.513 1.573a.25.25 0 00-.177-.073H3.75a.25.25 0 00-.25.25z"/></svg>
+                                JSON
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="card stats-card">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M1.5 1.75V13.5h13.75a.75.75 0 010 1.5H.75a.75.75 0 01-.75-.75V1.75a.75.75 0 011.5 0zm14.28 2.53l-5.25 5.25a.75.75 0 01-1.06 0L7 7.06 4.28 9.78a.751.751 0 01-1.042-.018.751.751 0 01-.018-1.042l3.25-3.25a.75.75 0 011.06 0L10 7.94l4.72-4.72a.751.751 0 011.042.018.751.751 0 01.018 1.042z"/></svg>
+                        統計サマリー
+                    </h3>
+                    <div class="stats-list">
+                        <div class="stat-item"><span class="stat-label">パブリックリポジトリ</span><span id="stat-repos" class="stat-value">0</span></div>
+                        <div class="stat-item"><span class="stat-label">総スター獲得数</span><span id="stat-stars" class="stat-value">0</span></div>
+                        <div class="stat-item"><span class="stat-label">総フォーク数</span><span id="stat-forks" class="stat-value">0</span></div>
+                        <div class="stat-item"><span class="stat-label">Gist数</span><span id="stat-gists" class="stat-value">0</span></div>
+                        <div class="stat-item"><span class="stat-label">アカウント作成日</span><span id="stat-created" class="stat-value">-</span></div>
+                    </div>
+                </div>
+
+                <div class="card language-card">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M1.543 7.25h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.348-.55-2.62.63-4.46 2.857-4.661 5.498zM2.938 8.75c.482 2.453 2.269 4.454 4.636 5.087-.07-.116-.142-.239-.217-.369-.718-1.25-1.477-3.016-1.621-4.718zM5.84 8.75c.149 1.506.83 3.063 1.47 4.188.127.224.249.428.362.607.113-.18.235-.383.362-.607.64-1.125 1.321-2.682 1.47-4.188zM9.504 7.25c-.149-1.506-.83-3.063-1.47-4.188a14.768 14.768 0 00-.362-.607 14.727 14.727 0 00-.362.607c-.64 1.125-1.321 2.682-1.47 4.188zM7.674 2.302c-.07.116-.142.239-.217.369-.718 1.25-1.477 3.016-1.621 4.718H3.276C3.758 5.046 5.545 3.045 7.912 2.412a10.75 10.75 0 00-.238-.11zm4.583 4.948c-.201-2.641-2.041-4.868-4.661-5.498.111.169.228.353.348.55.714 1.192 1.436 2.874 1.58 4.948zm-1.533 1.5h2.733c-.201 2.641-2.041 4.868-4.661 5.498.111-.169.228-.353.348-.55.714-1.192 1.436-2.874 1.58-4.948z"/></svg>
+                        言語分布
+                    </h3>
+                    <div class="language-chart-wrapper">
+                        <canvas id="language-chart"></canvas>
+                    </div>
+                    <div id="language-legend" class="language-legend"></div>
+                </div>
+
+                <div class="card activity-card">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M4.75 0a.75.75 0 01.75.75V2h5V.75a.75.75 0 011.5 0V2h1.25c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0113.25 16H2.75A1.75 1.75 0 011 14.25V3.75C1 2.784 1.784 2 2.75 2H4V.75A.75.75 0 014.75 0zm0 3.5h-2a.25.25 0 00-.25.25V6h11V3.75a.25.25 0 00-.25-.25h-8.5zm-2.25 4v6.75c0 .138.112.25.25.25h10.5a.25.25 0 00.25-.25V7.5z"/></svg>
+                        アクティビティ
+                    </h3>
+                    <div class="activity-stats">
+                        <div class="activity-stat-big">
+                            <span id="activity-events" class="activity-number">0</span>
+                            <span class="activity-label">最近のイベント</span>
+                        </div>
+                        <div class="activity-stat-big">
+                            <span id="activity-commits" class="activity-number">0</span>
+                            <span class="activity-label">最近のコミット</span>
+                        </div>
+                    </div>
+                    <div id="recent-activity" class="recent-activity"></div>
+                </div>
+            </section>
+
+            <!-- Contribution Heatmap -->
+            <section class="card heatmap-section">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M8 4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+                        コントリビューション
+                    </h3>
+                    <div id="heatmap-info" class="heatmap-info"></div>
+                </div>
+                <div id="heatmap-container" class="heatmap-container"></div>
+                <div class="heatmap-legend">
+                    <span>少ない</span>
+                    <div class="heatmap-legend-cells">
+                        <div class="heatmap-cell" data-level="0"></div>
+                        <div class="heatmap-cell" data-level="1"></div>
+                        <div class="heatmap-cell" data-level="2"></div>
+                        <div class="heatmap-cell" data-level="3"></div>
+                        <div class="heatmap-cell" data-level="4"></div>
+                    </div>
+                    <span>多い</span>
+                </div>
+            </section>
+
+            <!-- Repository List -->
+            <section class="repos-section">
+                <div class="repos-header">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 010-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8zM5 12.25a.25.25 0 01.25-.25h3.5a.25.25 0 01.25.25v3.25a.25.25 0 01-.4.2l-1.45-1.087a.249.249 0 00-.3 0L5.4 15.7a.25.25 0 01-.4-.2z"/></svg>
+                        リポジトリ一覧
+                        <span id="repos-count" class="repos-count"></span>
+                    </h3>
+                    <div class="repos-controls">
+                        <input type="text" id="repo-search" class="input input-sm" placeholder="リポジトリを検索...">
+                        <select id="filter-language" class="select">
+                            <option value="">すべての言語</option>
+                        </select>
+                        <select id="sort-repos" class="select">
+                            <option value="stars">スター数順</option>
+                            <option value="updated">更新日順</option>
+                            <option value="name">名前順</option>
+                            <option value="forks">フォーク数順</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="repos-list" class="repos-list"></div>
+                <button id="load-more-repos" class="btn btn-outline load-more hidden">もっと表示</button>
+            </section>
+
+            <!-- Cache Info -->
+            <div class="cache-info">
+                <span id="cache-time"></span>
+                <span id="rate-limit-info" class="rate-limit-info"></span>
+                <button id="refresh-btn" class="btn btn-ghost btn-sm">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M1.705 8.005a.75.75 0 01.834.656 5.5 5.5 0 009.592 2.97l-1.204-1.204a.25.25 0 01.177-.427h3.646a.25.25 0 01.25.25v3.646a.25.25 0 01-.427.177l-1.38-1.38A7.002 7.002 0 011.05 8.84a.75.75 0 01.656-.834zM8 2.5a5.487 5.487 0 00-4.131 1.869l1.204 1.204A.25.25 0 014.896 6H1.25A.25.25 0 011 5.75V2.104a.25.25 0 01.427-.177l1.38 1.38A7.002 7.002 0 0114.95 7.16a.75.75 0 11-1.49.178A5.5 5.5 0 008 2.5z"/></svg>
+                    更新
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>設定</h3>
+                <button class="modal-close" data-modal="settings-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="token-input">GitHubアクセストークン</label>
+                    <p class="form-hint">トークンを設定するとAPI制限が緩和され、コントリビューションデータを取得できます</p>
+                    <div class="input-group">
+                        <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxx" class="input">
+                        <button id="toggle-token" class="btn btn-ghost">表示</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>テーマ</label>
+                    <div class="theme-options">
+                        <label class="radio-label"><input type="radio" name="theme" value="light"> ライト</label>
+                        <label class="radio-label"><input type="radio" name="theme" value="dark"> ダーク</label>
+                        <label class="radio-label"><input type="radio" name="theme" value="system"> システム設定に従う</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>表示項目</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label"><input type="checkbox" id="show-stats" checked> 統計サマリー</label>
+                        <label class="checkbox-label"><input type="checkbox" id="show-languages" checked> 言語分布</label>
+                        <label class="checkbox-label"><input type="checkbox" id="show-activity" checked> アクティビティ</label>
+                        <label class="checkbox-label"><input type="checkbox" id="show-heatmap" checked> コントリビューション</label>
+                        <label class="checkbox-label"><input type="checkbox" id="show-repos" checked> リポジトリ一覧</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="clear-cache-btn" class="btn btn-outline">キャッシュをクリア</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-settings" class="btn btn-primary">保存</button>
+                <button class="btn btn-ghost modal-close" data-modal="settings-modal">キャンセル</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div id="compare-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>ユーザー比較</h3>
+                <button class="modal-close" data-modal="compare-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="compare-inputs">
+                    <div class="compare-input-group">
+                        <label>ユーザー1</label>
+                        <input type="text" id="compare-user1" placeholder="ユーザー名" class="input">
+                    </div>
+                    <span class="compare-vs">VS</span>
+                    <div class="compare-input-group">
+                        <label>ユーザー2</label>
+                        <input type="text" id="compare-user2" placeholder="ユーザー名" class="input">
+                    </div>
+                    <button id="compare-start" class="btn btn-primary">比較する</button>
+                </div>
+                <div id="compare-loading" class="loading hidden">
+                    <div class="loading-spinner"></div>
+                    <p>比較データを取得中...</p>
+                </div>
+                <div id="compare-result" class="compare-result hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar Modal -->
+    <div id="avatar-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-avatar">
+            <button class="modal-close" data-modal="avatar-modal">&times;</button>
+            <img id="avatar-large" src="" alt="Avatar Large">
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
